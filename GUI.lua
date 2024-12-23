@@ -5,10 +5,11 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
-if _G.notoriety then
+local _value = getgenv().notoriety
+if _value ~= 0 and _value == _value and _value ~= "" and _value then
 	error("This script is already running!")
 else
-	_G.notoriety = true
+	getgenv().notoriety = true
 end
 --[[
 	***********************************************************
@@ -290,15 +291,6 @@ do
 		if self.tool == self.equipped then
 			return nil
 		end
-		local _result = self.equipped
-		if _result ~= nil then
-			_result = _result.Name
-		end
-		local _condition = "Agent equipped tool: " .. _result
-		if not (_condition ~= "" and _condition) then
-			_condition = "None"
-		end
-		print(_condition)
 		self.tool = self.equipped
 	end
 end
@@ -496,9 +488,10 @@ end
 	 * Last updated: Dec. 22, 2024
 	 ***********************************************************
 ]]
-Builder.new():root("brickmane_hub", "Notoriety"):library(library):withSaveManager(savemanager):withThemeManager(thememanager):windows({ Window.new():title("Brickmane Awakening | Notoriety | JADE STINKS"):centered(true):autoShow(true):withFadeTime(0):pages({ Page.new():title("Gameplay"):left({ Groupbox.new():title("NPC Utility"):elements({ Toggle.new("gameplay.kill_cops.enabled"):title("Kill All Cops"):tooltip("Automatically kills cops"):default(false), DependencyBox.new():dependsOn("gameplay.kill_cops.enabled", true):elements({ Slider.new("gameplay.kill_cops.delay"):title("Kill All Cops Delay"):suffix(" seconds"):round(1):limits(0, 1):default(0.1):hideMax(true) }), Toggle.new("gameplay.yell_civilians.enabled"):title("Yell at all civillians"):tooltip("Automatically yells at civillians"):default(false), DependencyBox.new():dependsOn("gameplay.yell_civilians.enabled", true):elements({ Slider.new("gameplay.yell_civilians.delay"):title("Yell at all civillians Delay"):suffix(" seconds"):round(1):limits(0, 1):default(0.1):hideMax(true) }) }), Groupbox.new():title("Players Utility"):elements({ Toggle.new("gameplay.movement.infinite_stamina"):title("Infinite Stamina"):tooltip("Disables stamina consumption"):default(false), Button.new("gameplay.player.self_revive"):title("Self-Revive"):tooltip("Revives yourself in an instant"):onClick(function()
+Builder.new():root("brickmane_hub", "Notoriety"):library(library):withSaveManager(savemanager):withThemeManager(thememanager):windows({ Window.new():title("Brickmane Awakening | Notoriety | v.0.1"):centered(true):autoShow(true):withFadeTime(0):pages({ Page.new():title("Gameplay"):left({ Groupbox.new():title("NPC Utility"):elements({ Toggle.new("gameplay.kill_cops.enabled"):title("Kill All Cops"):tooltip("Automatically kills cops"):default(false), DependencyBox.new():dependsOn("gameplay.kill_cops.enabled", true):elements({ Slider.new("gameplay.kill_cops.delay"):title("Kill All Cops Delay"):suffix(" seconds"):round(1):limits(0, 1):default(0.1):hideMax(true) }), Toggle.new("gameplay.yell_civilians.enabled"):title("Yell at all civillians"):tooltip("Automatically yells at civillians"):default(false), DependencyBox.new():dependsOn("gameplay.yell_civilians.enabled", true):elements({ Slider.new("gameplay.yell_civilians.delay"):title("Yell at all civillians Delay"):suffix(" seconds"):round(1):limits(0, 1):default(0.1):hideMax(true) }) }), Groupbox.new():title("Players Utility"):elements({ Toggle.new("gameplay.movement.infinite_stamina"):title("Infinite Stamina"):tooltip("Disables stamina consumption"):default(false), Button.new("gameplay.player.self_revive"):title("Self-Revive"):tooltip("Revives yourself in an instant"):onClick(function()
 	return AgentController.__self_revive()
-end) }) }):right({ Groupbox.new():title("Gun Mods"):elements({ Toggle.new("gameplay.gun_mods.enabled"):title("Enabled"):tooltip("Modifies the gun you are holding"):default(false), DependencyBox.new():dependsOn("gameplay.gun_mods.enabled", true):elements({ Slider.new("gameplay.gun_mods.delay"):title("Fire Delay"):suffix(" s"):round(2):limits(0.01, 1):default(0.13):hideMax(true), Slider.new("gameplay.gun_mods.speed"):title("Bullet Speed"):suffix("%"):round(0):limits(1, 200):default(50):hideMax(true), Slider.new("gameplay.gun_mods.accuracy"):title("Accuracy"):suffix("%"):round(0):limits(1, 100):default(1):hideMax(true), Slider.new("gameplay.gun_mods.reload_time"):title("Reload time"):suffix(" seconds"):round(2):limits(0.01, 1):default(1):hideMax(true) }), Toggle.new("gameplay.gun_mods.multiplier"):title("Damage Multiplier"):tooltip("Multiplies the amount of damage your gun does"):default(false), Toggle.new("gameplay.gun_mods.infinite_bullets"):title("Inf Bullets"):tooltip("You never run out of bullets."):default(false) }) }), Page.new():title("Settings"):left({ ThemeSection.new() }):right({ ConfigSection.new() }) }) }):renderUI()
+end) }) }):right({ Groupbox.new():title("Gun Mods"):elements({ Toggle.new("gameplay.gun_mods.enabled"):title("Enabled"):tooltip("Modifies the gun you are holding"):default(false), DependencyBox.new():dependsOn("gameplay.gun_mods.enabled", true):elements({ Slider.new("gameplay.gun_mods.delay"):title("Fire Delay"):suffix(" s"):round(2):limits(0.01, 1):default(0.13):hideMax(true), Slider.new("gameplay.gun_mods.speed"):title("Bullet Speed"):suffix("%"):round(0):limits(1, 200):default(50):hideMax(true), Slider.new("gameplay.gun_mods.accuracy"):title("Accuracy"):suffix("%"):round(0):limits(1, 100):default(1):hideMax(true), Slider.new("gameplay.gun_mods.reload_time"):title("Reload time"):suffix(" seconds"):round(2):limits(0.01, 1):default(1):hideMax(true) }), Toggle.new("gameplay.gun_mods.multiplier"):title("Damage Multiplier"):tooltip("Multiplies the amount of damage your gun does"):default(false), Toggle.new("gameplay.gun_mods.infinite_bullets"):title("Inf Bullets"):tooltip("You never run out of bullets."):default(false) }) }), Page.new():title("Settings"):left({ ThemeSection.new() }):right({ ConfigSection.new(), Groupbox.new():title("Menu Keybind"):elements({ Label.new():text("Keypicker"):extensions({ KeyPicker.new("menu.keybind"):bind("End") }) }) }) }) }):renderUI()
+library.ToggleKeybind = Options["menu.keybind"]
 --[[
 	***********************************************************
 	 * INITIALIZATION
